@@ -1,4 +1,14 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+const foods = ref([{ id: 0, ingredient: 'にんじん'}, { id: 1, ingredient: 'だいこん'}])
+const inputtingIngredient = ref<string>('')
+
+const postFood = () => {
+    const food = { id: Math.random(), ingredient: inputtingIngredient.value }
+    foods.value.push(food)
+    inputtingIngredient.value = ''
+    console.log('inputting', inputtingIngredient.value)
+}
 
 </script>
 
@@ -6,13 +16,13 @@
     <h1>Food</h1>
     <div class="container">
         <div class="form-container">
-            <input />
-            <button class="save-button">追加する</button>
+            <input v-model="inputtingIngredient" />
+            <button class="save-button" @click="postFood()">追加する</button>
         </div>
         <div class="food-container">
             <ul>
-                <li>
-                    <span>中身</span>
+                <li v-for="food in foods" :key="food.id">
+                    <span>{{ food.ingredient }}</span>
                 </li>
             </ul>
         </div>
