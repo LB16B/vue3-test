@@ -10,6 +10,9 @@ const postFood = () => {
     console.log('inputting', inputtingIngredient.value)
 }
 
+const deleteFood = (id: number) => {
+    foods.value = foods.value.filter(f => f.id !== id)
+}
 </script>
 
 <template>
@@ -19,10 +22,12 @@ const postFood = () => {
             <input v-model="inputtingIngredient" />
             <button class="save-button" @click="postFood()">追加する</button>
         </div>
+        <p v-if="foods.length <= 0" class="error">何も登録されていません</p>
         <div class="food-container">
             <ul>
-                <li v-for="food in foods" :key="food.id">
+                <li v-for="food in foods" :key="food.id" class="food-list">
                     <span>{{ food.ingredient }}</span>
+                    <button @click="deleteFood(food.id)" class="delete-button">削除する</button>
                 </li>
             </ul>
         </div>
@@ -40,12 +45,23 @@ input {
     text-align: center;
 }
 
+.error {
+    text-align: center;
+    color: red;
+}
+
+.food-list {
+    display: flex;
+    padding: 15px 100px;
+    justify-content: space-between;
+}
+
 .save-button {
     width: 100px;
     margin: 10px auto;
 }
-.container {
-
+.delete-button {
+    width: 100px;
 }
 
 .form-container {
