@@ -9,11 +9,12 @@ type Props = {
     foods: Food[]
 }
 
+defineProps<Props>()
+const emit = defineEmits(['delete-food'])
 const deleteFood = (id: number) => {
-    console.log('delete')
+    emit('delete-food', id)
 }
 
-defineProps<Props>()
 </script>
 
 <template>

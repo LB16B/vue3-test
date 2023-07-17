@@ -11,9 +11,9 @@ const postFood = (ingredient: string) => {
     // inputtingIngredient.value = ''
 }
 
-// const deleteFood = (id: number) => {
-//     foods.value = foods.value.filter(f => f.id !== id)
-// }
+const deleteFood = (id: number) => {
+    foods.value = foods.value.filter(f => f.id !== id)
+}
 </script>
 
 <template>
@@ -23,7 +23,7 @@ const postFood = (ingredient: string) => {
         <p v-if="foods.length <= 0" class="error">何も登録されていません</p>
         <div class="food-container">
             <ul>
-                <FoodList :foods="foods" />
+                <FoodList :foods="foods" @delete-food="deleteFood" />
             </ul>
         </div>
     </div>

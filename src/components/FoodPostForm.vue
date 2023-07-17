@@ -6,7 +6,6 @@ const emit = defineEmits(['post-food'])
 const postFood = () => {
     emit('post-food', inputtingIngredient.value)
     inputtingIngredient.value = ''
-    // console.log('post')
 }
 
 </script>
