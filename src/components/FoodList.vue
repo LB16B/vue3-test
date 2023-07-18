@@ -1,43 +1,38 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
-type Food = {
-    id: number,
-    ingredient: string
-}
+import { Food } from './Food.vue'
 
 type Props = {
     foods: Food[]
 }
 
 defineProps<Props>()
-const emit = defineEmits(['delete-food'])
-const deleteFood = (id: number) => {
-    emit('delete-food', id)
-}
+const emit = defineEmits(['delete'])
 
+const onClickDelete = (id: number) => {
+    emit('delete', id)
+}
 </script>
 
 <template>
     <li v-for="food in foods" :key="food.id" class="food-list">
         <span>{{ food.ingredient }}</span>
-        <button @click="deleteFood(food.id)" class="delete-button">削除する</button>
+        <span>{{ food.amount }}</span>
+        <button @click="onClickDelete(food.id)">delete</button>
     </li>
 </template>
 
 <style scoped>
 .food-list {
     display: flex;
-    padding: 15px 100px;
     justify-content: space-between;
-}
-
-.delete-button {
-    width: 100px;
-}
-
-li {
     list-style: none;
-    background: rgb(241, 214, 234);
     margin-bottom: 8px;
+    width: 350px;
+    height: 20px;
+    align-items: center;
+    padding: 10px;
+    background: rgb(247, 204, 211);
+    border-radius: 8px;
+    font-weight: bold;
 }
 </style>

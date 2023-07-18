@@ -1,49 +1,47 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, Ref } from 'vue'
 import FoodPostForm from './FoodPostForm.vue';
 import FoodList from './FoodList.vue';
-const foods = ref([{ id: 0, ingredient: 'にんじん'}, { id: 1, ingredient: 'だいこん'}])
-// const inputtingIngredient = ref<string>('')
 
-const postFood = (ingredient: string) => {
-    const food = { id: Math.random(), ingredient }
+export type Food = {
+    id: number,
+    ingredient: string,
+    amount: number,
+}
+
+const foods : Ref<Food[]> = ref([{id: 0, ingredient: 'にんじん', amount: 1}, {id: 0, ingredient: 'だいこん', amount: 3}])
+
+const registerFood = (food: Food) => {
     foods.value.push(food)
-    // inputtingIngredient.value = ''
 }
 
 const deleteFood = (id: number) => {
     foods.value = foods.value.filter(f => f.id !== id)
 }
+
 </script>
 
 <template>
-    <h1>Food</h1>
+    <h1>必要な材料</h1>
     <div class="container">
-        <FoodPostForm @post-food="postFood" />
-        <p v-if="foods.length <= 0" class="error">何も登録されていません</p>
-        <div class="food-container">
+        <FoodPostForm @register="registerFood" />
+        <div class="list-container">
             <ul>
-                <FoodList :foods="foods" @delete-food="deleteFood" />
+                <FoodList :foods="foods" @delete="deleteFood" />
             </ul>
         </div>
     </div>
 </template>
 
 <style scoped>
+
 h1 {
     text-align: center;
 }
 
-
-.error {
-    text-align: center;
-    color: red;
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-
-.food-container {
-    width: 700px;
-    margin: 0 auto;
-    text-align: center;
-}
-
 </style>
