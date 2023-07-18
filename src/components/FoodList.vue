@@ -8,8 +8,10 @@ type Props = {
 defineProps<Props>()
 const emit = defineEmits(['delete'])
 
-const onClickDelete = (id: number) => {
-    emit('delete', id)
+const onClickDelete = (id: number, ingredient: string) => {
+    if (confirm('Delete' + ingredient + '?')) {
+        emit('delete', id)
+    }
 }
 </script>
 
@@ -17,7 +19,7 @@ const onClickDelete = (id: number) => {
     <li v-for="food in foods" :key="food.id" class="food-list">
         <span>{{ food.ingredient }}</span>
         <span>{{ food.amount }}</span>
-        <button @click="onClickDelete(food.id)">delete</button>
+        <button @click="onClickDelete(food.id, food.ingredient)">delete</button>
     </li>
 </template>
 

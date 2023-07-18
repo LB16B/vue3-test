@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 const inputtingIngredient = ref<string>('')
 const inputtingAmount = ref<number>(0)
 
@@ -11,6 +11,20 @@ const register = () => {
     emit('register', food)
 }
 
+const ingredientLengthLimit = 15
+
+const isValidIngredient = computed(() => {
+    if (inputtingIngredient.value.length >= ingredientLengthLimit) {
+        return false
+    } else {
+        return true
+    }
+})
+
+const color = computed(() => {
+    return isValidIngredient.value ? 'white' : 'red'
+})
+
 </script>
 
 <template>
@@ -18,14 +32,15 @@ const register = () => {
         <div class="input-container">
             <div>
                 <span>ingredient:</span>
-                <input class="input" v-model="inputtingIngredient" />
+                <input class="input-ingredient" v-model="inputtingIngredient" />
             </div>
             <div>
                 <span>amount:</span>
                 <input class="input" v-model="inputtingAmount" type="number" />
             </div>
         </div>
-        <button @click="register" class="register-button">register</button>
+        <span class="error-message" v-if="!isValidIngredient">{{ ingredientLengthLimit }} characters or less, please</span>
+        <button :disabled="!isValidIngredient" @click="register" class="register-button">register</button>
     </div>
 </template>
 
@@ -54,6 +69,12 @@ const register = () => {
     width: 200px;
     margin-right: 20px;
 }
+.input-ingredient {
+    background: v-bind(color);
+    margin-bottom: 10px;
+    width: 200px;
+    margin-right: 20px;
+}
 
 span {
     font-weight: bold;
@@ -71,5 +92,9 @@ span {
 
 .register-button:hover {
     opacity: .8;
+}
+
+.error-message {
+    color: red;
 }
 </style>

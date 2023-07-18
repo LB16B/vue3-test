@@ -9,7 +9,7 @@ export type Food = {
     amount: number,
 }
 
-const foods : Ref<Food[]> = ref([{id: 0, ingredient: 'にんじん', amount: 1}, {id: 0, ingredient: 'だいこん', amount: 3}])
+const foods : Ref<Food[]> = ref([{id: 0, ingredient: 'にんじん', amount: 1}, {id: 1, ingredient: 'だいこん', amount: 3}])
 
 const registerFood = (food: Food) => {
     foods.value.push(food)
